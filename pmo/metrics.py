@@ -81,6 +81,31 @@ def add_evm_indices(evm: pd.DataFrame, projects: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def eac_scenarios(row: pd.Series) -> pd.DataFrame:
+    """The three standard PMBOK estimate-at-completion formulas, as a forecast range.
+
+    Each answers a different question about the future:
+      * One-off problems:  AC + (BAC - EV)               remaining work goes exactly to budget
+      * Current cost trend: BAC / CPI                    cost efficiency so far continues
+      * Cost and schedule:  AC + (BAC - EV) / (CPI x SPI) being late also costs money (e.g. a fixed
+                                                         team kept on longer)
+    The spread between them is the honest forecast range."""
+    bac, ac, ev, cpi, spi = row.budget_gbp, row.actual_cost, row.earned_value, row.cpi, row.spi
+    rows = [("One-off problems", "AC + (BAC − EV)", ac + (bac - ev)),
+            ("Current cost trend continues", "BAC ÷ CPI", bac / cpi),
+            ("Cost and schedule trends continue", "AC + (BAC − EV) ÷ (CPI × SPI)", ac + (bac - ev) / (cpi * spi))]
+    df = pd.DataFrame(rows, columns=["scenario", "formula", "eac"])
+    df["vac"] = bac - df.eac
+    return df
+
+
+def forecast_finish(row: pd.Series) -> pd.Period:
+    """Time-based forecast: planned duration stretched by schedule efficiency (duration ÷ SPI)."""
+    start, end = pd.Period(row.start_month, "M"), pd.Period(row.end_month, "M")
+    planned = (end - start).n + 1
+    return start + int(np.ceil(planned / max(row.spi, 0.05))) - 1
+
+
 def rag_status(cpi: float, spi: float, critical_risks: int = 0) -> str:
     """Red if either index < 0.85; Amber if either < 0.95 or a critical (20+) risk is open; else Green."""
     if pd.isna(cpi) or pd.isna(spi):
@@ -230,6 +255,11 @@ def project_commentary(row: pd.Series, recon: pd.DataFrame) -> list[str]:
         notes.append(f"Schedule: {row.spi:.0%} of the work planned by now is complete.")
     else:
         notes.append(f"Schedule: on track ({row.spi:.0%} of planned work complete).")
+    if row.cpi < GREEN_MIN or row.spi < GREEN_MIN:
+        sc = eac_scenarios(row)
+        notes.append(f"Forecast range: {gbp(sc.eac.min())} if the problems were one-off, up to {gbp(sc.eac.max())} "
+                     f"if both cost and schedule trends continue; finish around "
+                     f"{forecast_finish(row).strftime('%b %Y')} against a planned {pd.Period(row.end_month, 'M').strftime('%b %Y')}.")
     if row.tcpi > 1.10 and row.cpi < GREEN_MIN:
         notes.append(f"Recovery: the remaining work would need to run at {row.tcpi:.2f} efficiency to land on budget - "
                      "not realistic without re-baselining or a change request.")

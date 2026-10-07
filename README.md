@@ -26,7 +26,7 @@ This project automates that kind of control. One engine calculates earned value,
 | Tab | What a PMO lead gets from it |
 |---|---|
 | **Portfolio** | RAG status for every project, a CPI vs SPI quadrant (bubble = budget), the programme efficiency trend and the full project register |
-| **Project deep dive** | Earned-value S-curve, forecast outturn, a plain-English explanation of what the numbers mean, open risks |
+| **Project deep dive** | Earned-value S-curve, a **forecast range** from the three standard PMBOK estimate-at-completion formulas, a forecast finish date (duration ÷ SPI), a plain-English explanation of what the numbers mean, open risks |
 | **Resources** | Utilisation heat map for 42 people across 9 months, with over-allocation (>100%) and bench (<60%) exceptions and how long each has persisted |
 | **Risks** | 5×5 probability × impact heat map, exposure by project, overdue-action tracking |
 | **Billing reconciliation** | Timesheet days × day rates, checked against invoices and SOW coverage. Flags under-billing, over-billing, unsigned SOWs and expired SOWs |
@@ -58,6 +58,7 @@ The generator plants realistic problems. The dashboard finds every one of them, 
 | **EAC** (estimate at completion) | BAC ÷ CPI | Final cost if current efficiency continues |
 | **VAC** (variance at completion) | BAC − EAC | Forecast over/underspend |
 | **TCPI** (to-complete index) | (BAC − EV) ÷ (BAC − AC) | Efficiency needed from now on to land on budget. Above ~1.10 is rarely achievable |
+| **EAC range** | AC + (BAC − EV) · BAC ÷ CPI · AC + (BAC − EV) ÷ (CPI × SPI) | Final cost if problems were one-off · if cost efficiency continues · if being late keeps costing money. Report the range, not one number |
 
 **RAG rules** (one place to change them: `pmo/metrics.py`)
 - 🔴 **Red:** CPI or SPI below 0.85
@@ -79,7 +80,7 @@ Optional:
 
 ```bash
 python -m pmo.generate_data   # rebuild the sample data (seeded, so the output is identical every time)
-pytest                        # 17 tests: formulas, RAG rules, and that every planted issue is detected
+pytest                        # 18 tests: formulas, RAG rules, and that every planted issue is detected
 ```
 
 ## How it's built

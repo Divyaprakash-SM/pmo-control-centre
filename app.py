@@ -10,7 +10,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from pmo.metrics import (CRITICAL_RISK_SCORE, GREEN_MIN, HIGH_RISK_SCORE, RED_BELOW, billing_reconciliation, gbp, load_portfolio,
+from pmo.metrics import (CRITICAL_RISK_SCORE, GREEN_MIN, eac_scenarios, forecast_finish, HIGH_RISK_SCORE, RED_BELOW, billing_reconciliation, gbp, load_portfolio,
                          portfolio_snapshot, portfolio_trend, project_commentary, project_trend,
                          resource_exceptions, risk_register, utilisation)
 from pmo.report import status_report
@@ -105,7 +105,7 @@ with tab_overview:
     c[1].metric("Forecast outturn", gbp(eac), f"{gbp(eac - bac)} vs budget", delta_color="inverse")
     c[2].metric("Projects Red / Amber", f"{counts.get('Red', 0)} / {counts.get('Amber', 0)}")
     c[3].metric("Revenue not invoiced", gbp(leakage))
-    c[4].metric("High risks open", high_open, f"{int(risks.overdue.sum())} actions overdue", delta_color="off")
+    c[4].metric("High risks open", high_open, f"{int(risks.overdue.sum())} actions overdue", delta_color="off", delta_arrow="off")
 
     left, right = st.columns([1.15, 1])
     with left:
@@ -211,6 +211,38 @@ with tab_project:
                                     "action_due_date": st.column_config.DateColumn("Action due", format="DD MMM YYYY"),
                                     "overdue": st.column_config.CheckboxColumn("Overdue")})
 
+    st.markdown("#### Forecast range: where will it land?")
+    prow = snap[snap.project_id == pid].iloc[0]
+    sc = eac_scenarios(prow)
+    l2, r2 = st.columns([1.4, 1])
+    with l2:
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=[sc.eac.min(), sc.eac.max()], y=["Forecast"] * 2, mode="lines",
+                                 line=dict(color=SERIES["pv"], width=8), opacity=0.25, showlegend=False, hoverinfo="skip"))
+        fig.add_trace(go.Scatter(x=sc.eac, y=["Forecast"] * 3, mode="markers+text", text=["①", "②", "③"],
+                                 textposition="top center", marker=dict(size=14, color=SERIES["pv"], line=dict(color="white", width=2)),
+                                 customdata=sc[["scenario", "formula"]], showlegend=False,
+                                 hovertemplate="%{customdata[0]}<br>%{customdata[1]} = £%{x:,.0f}<extra></extra>"))
+        fig.add_vline(x=prow.budget_gbp, line=dict(color=INK, width=1.5, dash="dash"))
+        fig.add_annotation(x=prow.budget_gbp, y=1, yref="paper", text="Budget", showarrow=False, xanchor="left",
+                           font=dict(size=11, color=MUTED))
+        lo_x = min(sc.eac.min(), prow.budget_gbp) * 0.97
+        hi_x = max(sc.eac.max(), prow.budget_gbp) * 1.03
+        style(fig, 170)
+        fig.update_layout(margin=dict(l=10, r=10, t=20, b=10))
+        fig.update_xaxes(tickprefix="£", tickformat=".3s", range=[lo_x, hi_x]); fig.update_yaxes(visible=False)
+        st.plotly_chart(fig, use_container_width=True)
+    with r2:
+        fin = forecast_finish(prow)
+        late = (fin - pd.Period(prow.end_month, "M")).n
+        st.markdown("\n".join(f"- {i} **{r.scenario}:** {gbp(r.eac)}" for i, r in zip("①②③", sc.itertuples())))
+        planned_end = pd.Period(prow.end_month, "M").strftime("%b %Y")
+        verdict = "on plan" if late <= 0 else f"{late} month(s) after the planned {planned_end}"
+        st.markdown(f"**Forecast finish:** {fin.strftime('%b %Y')} ({verdict}), based on duration ÷ SPI.")
+    st.caption("The three standard PMBOK estimate-at-completion formulas. Each assumes a different future: problems "
+               "were one-off (①), cost efficiency continues (②), or being late keeps costing money too (③). "
+               "The spread between them is the honest range to report.")
+
 # ===========================================================================
 # 3. RESOURCES
 # ===========================================================================
@@ -314,7 +346,7 @@ with tab_billing:
     c[0].metric("Billable effort logged", gbp(recon.billable_gbp.sum()))
     c[1].metric("Invoiced", gbp(recon.amount_gbp.sum()))
     c[2].metric("Not invoiced", gbp(exc.gap_gbp.clip(lower=0).sum()))
-    c[3].metric("Exceptions", len(exc), f"{exc.project_id.nunique()} projects", delta_color="off")
+    c[3].metric("Exceptions", len(exc), f"{exc.project_id.nunique()} projects", delta_color="off", delta_arrow="off")
 
     left, right = st.columns([1, 1.2])
     with left:

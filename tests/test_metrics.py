@@ -3,7 +3,7 @@
 import pandas as pd
 import pytest
 
-from pmo.metrics import (add_evm_indices, billing_reconciliation, load_portfolio, portfolio_snapshot, rag_status,
+from pmo.metrics import (add_evm_indices, eac_scenarios, forecast_finish, billing_reconciliation, load_portfolio, portfolio_snapshot, rag_status,
                          risk_register, sow_cover, utilisation)
 from pmo.report import status_report
 
@@ -98,3 +98,13 @@ def test_status_report_builds_for_every_month(pf):
         text = status_report(pf, m)
         assert text.startswith("# Northwind")
         assert "## Decisions requested" in text
+
+
+def test_eac_scenarios_by_hand():
+    row = pd.Series({"budget_gbp": 1000, "actual_cost": 500, "earned_value": 400, "cpi": 0.8, "spi": 0.8,
+                     "start_month": "2026-01", "end_month": "2026-10"})
+    sc = eac_scenarios(row).set_index("formula").eac
+    assert sc["AC + (BAC − EV)"] == pytest.approx(1100)
+    assert sc["BAC ÷ CPI"] == pytest.approx(1250)
+    assert sc["AC + (BAC − EV) ÷ (CPI × SPI)"] == pytest.approx(500 + 600 / 0.64)
+    assert forecast_finish(row) == pd.Period("2027-01", "M")   # 10 planned months / 0.8 = 12.5 -> 13
