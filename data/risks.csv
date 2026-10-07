@@ -1,0 +1,36 @@
+risk_id,project_id,title,category,probability,impact,owner,status,raised_date,action_due_date
+RK001,P01,Security penetration test findings require rework,Technical,2,2,Priya Raman,Closed,2026-03-23,2026-05-29
+RK002,P01,Vendor rate card increase at renewal,Financial,4,3,Priya Raman,Closed,2026-05-26,2026-08-03
+RK003,P01,Third-party API delivery delayed,Supplier,3,2,Priya Raman,Open,2026-03-29,2026-08-23
+RK004,P01,Critical-path developer attrition,Resource,2,3,Priya Raman,Closed,2026-01-20,2026-03-18
+RK005,P01,Business readiness / training not started,Change,2,3,Priya Raman,Closed,2026-05-01,2026-06-02
+RK006,P01,Licence costs exceed estimate,Financial,4,4,Priya Raman,Mitigating,2026-05-25,2026-11-01
+RK007,P02,Cut-over window clashes with peak billing period,Schedule,1,5,Tom Hughes,Mitigating,2026-09-11,2026-11-09
+RK008,P02,Security penetration test findings require rework,Technical,2,3,Tom Hughes,Open,2026-06-18,2026-10-22
+RK009,P02,Business readiness / training not started,Change,2,2,Tom Hughes,Closed,2026-06-21,2026-09-06
+RK010,P02,Scope creep from business change requests,Scope,2,2,Priya Raman,Mitigating,2026-01-24,2026-09-10
+RK011,P03,Vendor rate card increase at renewal,Financial,2,5,Daniel Clarke,Closed,2026-04-21,2026-06-23
+RK012,P03,Integration environment unstable,Technical,2,5,Aisha Okafor,Open,2026-02-17,2026-08-05
+RK013,P03,Scope creep from business change requests,Scope,3,3,Aisha Okafor,Open,2026-07-04,2026-11-02
+RK014,P03,Key SME availability limited during UAT,Resource,5,3,Daniel Clarke,Closed,2026-06-28,2026-09-11
+RK015,P03,Legacy data quality worse than assumed,Data,2,5,Aisha Okafor,Mitigating,2026-02-09,2026-09-05
+RK016,P04,Legacy data quality worse than assumed,Data,2,2,Tom Hughes,Closed,2026-07-22,2026-09-27
+RK017,P04,Key SME availability limited during UAT,Resource,4,3,Tom Hughes,Closed,2026-04-02,2026-05-08
+RK018,P04,Third-party API delivery delayed,Supplier,3,2,Tom Hughes,Closed,2026-08-17,2026-09-24
+RK019,P04,Integration environment unstable,Technical,1,2,Tom Hughes,Open,2026-02-20,2026-11-04
+RK020,P05,Security penetration test findings require rework,Technical,3,4,Sophie Bennett,Open,2026-07-13,2026-10-10
+RK021,P05,Vendor rate card increase at renewal,Financial,4,4,Aisha Okafor,Open,2026-05-04,2026-11-04
+RK022,P05,Integration environment unstable,Technical,4,3,Aisha Okafor,Mitigating,2026-07-14,2026-11-02
+RK023,P06,Licence costs exceed estimate,Financial,4,2,Tom Hughes,Open,2026-04-05,2026-09-22
+RK024,P06,Legacy data quality worse than assumed,Data,4,2,Sophie Bennett,Open,2026-09-09,2026-10-16
+RK025,P06,Third-party API delivery delayed,Supplier,4,4,Tom Hughes,Open,2026-05-04,2026-07-26
+RK026,P06,Critical-path developer attrition,Resource,1,3,Aisha Okafor,Closed,2026-07-13,2026-09-09
+RK027,P07,Vendor rate card increase at renewal,Financial,3,4,Daniel Clarke,Mitigating,2026-03-18,2026-08-29
+RK028,P07,Regulatory sign-off later than planned,Compliance,1,4,Daniel Clarke,Mitigating,2026-07-15,2026-10-30
+RK029,P07,Key SME availability limited during UAT,Resource,4,5,Daniel Clarke,Open,2026-01-30,2026-09-25
+RK030,P08,Security penetration test findings require rework,Technical,2,2,Sophie Bennett,Open,2026-05-08,2026-09-24
+RK031,P08,Legacy data quality worse than assumed,Data,1,3,Priya Raman,Open,2026-03-05,2026-10-29
+RK032,P08,Licence costs exceed estimate,Financial,2,3,Sophie Bennett,Open,2026-04-11,2026-10-09
+RK033,P08,Key SME availability limited during UAT,Resource,2,2,Sophie Bennett,Closed,2026-07-26,2026-10-16
+RK034,P08,Regulatory sign-off later than planned,Compliance,4,2,Sophie Bennett,Mitigating,2026-01-27,2026-10-17
+RK035,P08,Cut-over window clashes with peak billing period,Schedule,1,4,Sophie Bennett,Closed,2026-06-30,2026-08-25

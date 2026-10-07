@@ -1,0 +1,9 @@
+project_id,project_name,workstream,project_manager,start_month,end_month,budget_gbp
+P01,ERP Finance Migration,Finance,Priya Raman,2025-11,2026-12,2400000
+P02,Customer Portal Rebuild,Digital,Tom Hughes,2026-01,2026-11,1350000
+P03,Data Warehouse Modernisation,Data,Aisha Okafor,2025-10,2026-12,3100000
+P04,Field Workforce Mobile App,Digital,Tom Hughes,2026-02,2026-12,880000
+P05,Smart Meter Data Platform,Data,Aisha Okafor,2026-01,2027-03,2750000
+P06,Cyber Security Uplift,Infrastructure,Daniel Clarke,2026-01,2026-10,960000
+P07,Cloud Hosting Migration,Infrastructure,Daniel Clarke,2025-12,2026-11,1900000
+P08,HR & Payroll Integration,Corporate,Sophie Bennett,2026-03,2027-01,720000

@@ -1,0 +1,43 @@
+resource_id,name,role,day_rate_gbp,capacity_days
+R001,Chloe Edwards,Project Manager,750,20
+R002,Harry Roberts,Project Manager,750,20
+R003,Ruby Gray,Project Manager,750,20
+R004,Ethan Hart,Project Manager,750,20
+R005,Oliver Ward,Business Analyst,600,20
+R006,Finn Jones,Business Analyst,600,20
+R007,Jack Wilson,Business Analyst,600,20
+R008,Amelia Iyer,Business Analyst,600,20
+R009,Rohan Thomas,Business Analyst,600,20
+R010,Adam Price,Business Analyst,600,20
+R011,Holly Ali,Business Analyst,600,20
+R012,Ella Shah,Solution Architect,900,20
+R013,Leah Wood,Solution Architect,900,20
+R014,Noah Taylor,Solution Architect,900,20
+R015,Ravi Nash,Solution Architect,900,20
+R016,Omar Green,Developer,550,20
+R017,Leo Mills,Developer,550,20
+R018,Anya Rose,Developer,550,20
+R019,Hannah Hughes,Developer,550,20
+R020,Isla Morris,Developer,550,20
+R021,Kwame Lewis,Developer,550,20
+R022,Lucas Baker,Developer,550,20
+R023,Sam Murphy,Developer,550,20
+R024,Lily Webb,Developer,550,20
+R025,Erin Evans,Developer,550,20
+R026,Mia Cooper,Developer,550,20
+R027,Max Fox,Developer,550,20
+R028,Evie Bose,Data Engineer,650,20
+R029,Arjun Dean,Data Engineer,650,20
+R030,Zara Khan,Data Engineer,650,20
+R031,Kai Bell,Data Engineer,650,20
+R032,Freya Brown,Data Engineer,650,20
+R033,Grace Walker,Data Engineer,650,20
+R034,Maya Patel,Test Analyst,480,20
+R035,Theo King,Test Analyst,480,20
+R036,Nia Lowe,Test Analyst,480,20
+R037,Ben Hall,Test Analyst,480,20
+R038,Sara Smith,Test Analyst,480,20
+R039,Owen Wright,Test Analyst,480,20
+R040,Tara Turner,PMO Analyst,420,20
+R041,Ivy Hill,PMO Analyst,420,20
+R042,Dev Reid,PMO Analyst,420,20
