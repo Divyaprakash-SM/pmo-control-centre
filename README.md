@@ -1,5 +1,7 @@
 # PMO Control Centre
 
+**▶ Live app: [pmo-dsmk.streamlit.app](https://pmo-dsmk.streamlit.app)** · no install needed
+
 **A portfolio governance dashboard for an 8-project, £14m transformation programme.** It turns raw project data into the questions a steering committee actually asks:
 
 - *Which projects are in trouble, and how much will they really cost?*
